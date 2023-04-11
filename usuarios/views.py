@@ -43,4 +43,5 @@ def login(request):
             messages.add_message(request, constants.ERROR, 'Usuário ou senha inválido')
             return redirect(reverse('login'))
         
-        auth.login()
+        auth.login(request, user)
+        return redirect('/evento/novo_evento/')
