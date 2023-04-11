@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.messages import constants
+from django.urls import reverse
 
 # Create your views here.
 def cadastro(request):
@@ -16,16 +17,16 @@ def cadastro(request):
 
         if not senha == confirmar_senha:
             messages.add_message(request, constants.ERROR, 'Senha não confere!')
-            return redirect('/usuarios/cadastro')
+            return redirect(reverse('cadastro'))
         # TODO: Validar força da senha
 
         user = User.objects.filter(username=username)
         
         if user.exists():
             messages.add_message(request, constants.ERROR, 'Usuário já cadastrado!')
-            return redirect('/usuarios/cadastro')
+            return redirect(reverse('cadastro'))
 
         user = User.objects.create_user(username=username, email=email, password=senha)
         messages.add_message(request, constants.SUCCESS, 'Usuário cadastrado com sucesso!')
 
-        return HttpResponse('Ok')
+        return redirect(reverse('login'))
