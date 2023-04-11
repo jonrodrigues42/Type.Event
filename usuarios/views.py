@@ -5,7 +5,6 @@ from django.contrib import messages
 from django.contrib.messages import constants
 from django.urls import reverse
 
-# Create your views here.
 def cadastro(request):
     if request.method == "GET":
         return render(request, 'cadastro.html')
@@ -30,3 +29,7 @@ def cadastro(request):
         messages.add_message(request, constants.SUCCESS, 'Usuário cadastrado com sucesso!')
 
         return redirect(reverse('login'))
+    
+def login(request):
+    if request.method == "GET":
+        return render(request, 'login.html')
