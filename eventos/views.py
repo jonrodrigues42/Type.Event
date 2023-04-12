@@ -3,4 +3,4 @@ from django.http import HttpResponse
 
 def novo_evento(request):
     if request.method == "GET":
-        return HttpResponse('Novo evento')
+        return render(request, 'novo_evento.html')
