@@ -45,7 +45,8 @@ def gerenciar_evento(request):
     if request.method == "GET":
         nome = request.GET.get('nome')
         eventos = Evento.objects.filter(criador=request.user)
-
+        # TODO: realizar outros filtros 
+        
         if nome:
             eventos = eventos.filter(nome__contains=nome)
 
