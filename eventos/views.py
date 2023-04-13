@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -46,8 +46,14 @@ def gerenciar_evento(request):
         nome = request.GET.get('nome')
         eventos = Evento.objects.filter(criador=request.user)
         # TODO: realizar outros filtros 
-        
+
         if nome:
             eventos = eventos.filter(nome__contains=nome)
 
         return render(request, 'gerenciar_evento.html', {'eventos': eventos})
+
+
+def inscrever_evento(request, id):
+    evento = get_object_or_404(Evento, id=id)
+    if request.method == "GET":
+        return render(request, 'inscrever_evento.html', {'evento': evento})
