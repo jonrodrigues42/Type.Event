@@ -41,6 +41,7 @@ def novo_evento(request):
         return redirect(reverse('novo_evento'))
     
 
+@login_required
 def gerenciar_evento(request):
     if request.method == "GET":
         nome = request.GET.get('nome')
@@ -53,6 +54,7 @@ def gerenciar_evento(request):
         return render(request, 'gerenciar_evento.html', {'eventos': eventos})
 
 
+@login_required
 def inscrever_evento(request, id):
     evento = get_object_or_404(Evento, id=id)
     if request.method == "GET":

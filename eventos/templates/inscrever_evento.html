@@ -14,8 +14,11 @@
                 <div class="col-md-6">
                     <h5>{{evento.descricao}}</h5><br>
                     <p>{{evento.data_inicio}} a {{evento.data_termino}}</p>
-
-                    <a style="text-decoration: none" class="btn-principal" href="#">QUERO PARTICIPAR</a>
+                    
+                    <form action="{% url 'inscrever_evento' %}" method="POST">
+                        <input class="btn-principal" type="submit" value="QUERO PARTICIPAR">
+                    </form>
+                    {% comment %} <a style="text-decoration: none" class="btn-principal" href="#">QUERO PARTICIPAR</a> {% endcomment %}
                 </div>
         </div>
     </div>
