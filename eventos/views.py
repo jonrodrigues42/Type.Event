@@ -67,3 +67,10 @@ def inscrever_evento(request, id):
         messages.add_message(request, constants.SUCCESS, 'Inscrição realizada com sucesso')
 
         return redirect(f'/eventos/inscrever_evento/{evento.id}/')
+    
+
+def participantes_evento(request, id):
+    evento = get_object_or_404(Evento, id=id)
+    if request.method =="GET":
+        participantes = evento.participantes.all()
+        return render(request, 'participantes_evento.html', {'evento': evento,'participantes': participantes})
