@@ -94,13 +94,13 @@ def gerar_csv(request, id):
 
     participantes = evento.participantes.all()
 
-    token =f'{token_urlsafe(6)}.csv'
+    token = f'{token_urlsafe(6)}.csv'
     path = os.path.join(settings.MEDIA_ROOT, token)
 
-    with open(path, 'w') as arq:
-        writer = csv.writer(arq, delimiter=',')
+    with open(path, 'w', newline='') as arq:
+        writer = csv.writer(arq, delimiter=";")
         for participante in participantes:
             x = (participante.username, participante.email)
             writer.writerow(x)
 
-    return HttpResponse(token)
+    return redirect(f'/media/{token}')
