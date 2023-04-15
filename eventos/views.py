@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages import constants
 from django.conf import settings
-from .models import Evento
+from .models import Evento, Certificado
 from secrets import token_urlsafe
 import csv
 import os
@@ -104,3 +104,23 @@ def gerar_csv(request, id):
             writer.writerow(x)
 
     return redirect(f'/media/{token}')
+
+
+@login_required
+def certificados_evento(request, id):
+    evento = get_object_or_404(Evento, id=id)
+    if not evento.criador == request.user:
+        raise Http404('Esse evento não é seu')
+    
+    if request.method == "GET":
+        qtd_certificados = evento.participantes.all().count() - Certificado.objects.filter(evento=evento).count()
+        return render(request, 'certificados_evento.html', {'evento': evento, 'qtd_certificados': qtd_certificados})
+
+
+@login_required
+def gerar_certificado(request, id):
+    evento = get_object_or_404(Evento, id=id)
+    if not evento.criador == request.user:
+        raise Http404('Esse evento não é seu')
+    
+    
